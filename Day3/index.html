@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MongoDB Save</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #dbeafe, #f0f9ff, #e0f2fe);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 700px;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    h1 {
+      text-align: center;
+      color: #1e3a8a;
+      margin-bottom: 25px;
+      font-size: 32px;
+    }
+
+    h2 {
+      margin-top: 30px;
+      margin-bottom: 15px;
+      color: #0f172a;
+      font-size: 24px;
+      border-left: 5px solid #2563eb;
+      padding-left: 10px;
+    }
+
+    .form-box {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      outline: none;
+      font-size: 16px;
+      transition: 0.3s;
+      background: #f8fafc;
+    }
+
+    input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+      background: #fff;
+    }
+
+    button {
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background: #2563eb;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
+
+    #users {
+      margin-top: 15px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .user-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 6px solid #2563eb;
+      padding: 16px;
+      border-radius: 12px;
+      transition: 0.3s;
+    }
+
+    .user-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    .user-name {
+      font-size: 20px;
+      font-weight: bold;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+
+    .user-role {
+      font-size: 15px;
+      color: #475569;
+    }
+
+    .empty {
+      text-align: center;
+      color: #64748b;
+      padding: 20px;
+      background: #f8fafc;
+      border-radius: 10px;
+      border: 1px dashed #cbd5e1;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      input,
+      button {
+        font-size: 15px;
+      }
+
+      .user-name {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Add User</h1>
+
+    <div class="form-box">
+      <input type="text" id="name" placeholder="Enter name" />
+      <input type="text" id="role" placeholder="Enter role" />
+      <button onclick="saveUser()">Save User</button>
+    </div>
+
+    <h2>All Users</h2>
+    <div id="users"></div>
+  </div>
+
+  <script>
+    async function saveUser() {
+      const name = document.getElementById("name").value.trim();
+      const role = document.getElementById("role").value.trim();
+
+      if (!name || !role) {
+        alert("Please fill all fields");
+        return;
+      }
+
+      const res = await fetch("http://localhost:3000/add-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name, role })
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      document.getElementById("name").value = "";
+      document.getElementById("role").value = "";
+
+      getUsers();
+    }
+
+    async function getUsers() {
+      const res = await fetch("http://localhost:3000/users");
+      const data = await res.json();
+
+      const usersDiv = document.getElementById("users");
+      usersDiv.innerHTML = "";
+
+      if (data.length === 0) {
+        usersDiv.innerHTML = `<div class="empty">No users found</div>`;
+        return;
+      }
+
+      data.forEach((user) => {
+        usersDiv.innerHTML += `
+          <div class="user-card">
+            <div class="user-name">${user.name}</div>
+            <div class="user-role">${user.role}</div>
+          </div>
+        `;
+      });
+    }
+
+    getUsers();
+  </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+    "user":[
+  {
+    "id": 1,
+    "name": "Mohit",
+    "role": "Frontend Developer"
+  },
+  {
+    "id": 2,
+    "name": "Rahul",
+    "role": "Backend Developer"
+  }
+]}
