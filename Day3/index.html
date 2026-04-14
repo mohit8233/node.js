@@ -6,168 +6,308 @@
   <title>MongoDB Save</title>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+    
 
-    body {
-      min-height: 100vh;
-      background: linear-gradient(135deg, #dbeafe, #f0f9ff, #e0f2fe);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
+  
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
 
-    .container {
-      width: 100%;
-      max-width: 700px;
-      background: #ffffff;
-      padding: 30px;
-      border-radius: 18px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-    }
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #dbeafe, #f0f9ff, #e0f2fe);
+  padding: 20px;
+}
 
-    h1 {
-      text-align: center;
-      color: #1e3a8a;
-      margin-bottom: 25px;
-      font-size: 32px;
-    }
+.container {
+  width: 100%;
+  /* max-width: 1200px; */
+  height: calc(100vh - 40px);
+  margin: auto;
+  padding: auto;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  display: flex;
+  overflow: hidden;
+  justify-content: space-around;
+}
 
-    h2 {
-      margin-top: 30px;
-      margin-bottom: 15px;
-      color: #0f172a;
-      font-size: 24px;
-      border-left: 5px solid #2563eb;
-      padding-left: 10px;
-    }
+.left-panel {
+  width: 50%;
+  min-width: 320px;
+  background: #ffffff;
+  padding: 35px 28px;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+}
 
-    .form-box {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
+.right-panel {
+  width: 50%;
+  background: #f8fafc;
+  padding: 30px 24px;
+  overflow-y: auto;
+}
 
-    input {
-      width: 100%;
-      padding: 14px 16px;
-      border: 1px solid #cbd5e1;
-      border-radius: 10px;
-      outline: none;
-      font-size: 16px;
-      transition: 0.3s;
-      background: #f8fafc;
-    }
+h1 {
+  color: #1e3a8a;
+  margin-bottom: 25px;
+  font-size: 32px;
+  text-align: left;
+}
 
-    input:focus {
-      border-color: #2563eb;
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
-      background: #fff;
-    }
+h2 {
+  margin-bottom: 18px;
+  color: #0f172a;
+  font-size: 24px;
+  border-left: 5px solid #2563eb;
+  padding-left: 10px;
+}
 
-    button {
-      padding: 14px;
-      border: none;
-      border-radius: 10px;
-      background: #2563eb;
-      color: white;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+.form-box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
-    button:hover {
-      background: #1d4ed8;
-      transform: translateY(-2px);
-    }
+input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  outline: none;
+  font-size: 16px;
+  transition: 0.3s;
+  background: #f8fafc;
+}
 
-    #users {
-      margin-top: 15px;
-      display: grid;
-      gap: 12px;
-    }
+input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+  background: #fff;
+}
 
-    .user-card {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-left: 6px solid #2563eb;
-      padding: 16px;
-      border-radius: 12px;
-      transition: 0.3s;
-    }
+button {
+  padding: 14px 18px;
+  border: none;
+  border-radius: 12px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
-    .user-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
-    }
+button:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
 
-    .user-name {
-      font-size: 20px;
-      font-weight: bold;
-      color: #0f172a;
-      margin-bottom: 6px;
-    }
+.btn-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
 
-    .user-role {
-      font-size: 15px;
-      color: #475569;
-    }
+.btn-row button {
+  flex: 1;
+}
 
-    .empty {
-      text-align: center;
-      color: #64748b;
-      padding: 20px;
-      background: #f8fafc;
-      border-radius: 10px;
-      border: 1px dashed #cbd5e1;
-    }
+.cancel-btn {
+  background: #64748b;
+}
 
-    @media (max-width: 600px) {
-      .container {
-        padding: 20px;
-      }
+.cancel-btn:hover {
+  background: #475569;
+}
 
-      h1 {
-        font-size: 26px;
-      }
+#users {
+  display: grid;
+  gap: 14px;
+}
 
-      h2 {
-        font-size: 20px;
-      }
+.user-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-left: 6px solid #2563eb;
+  padding: 18px;
+  border-radius: 14px;
+  transition: 0.3s;
+}
 
-      input,
-      button {
-        font-size: 15px;
-      }
+.user-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
 
-      .user-name {
-        font-size: 18px;
-      }
-    }
+.user-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.user-role {
+  font-size: 15px;
+  color: #475569;
+  margin-bottom: 14px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.small-btn {
+  padding: 10px 14px;
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+.edit-btn {
+  background: #f59e0b;
+}
+
+.edit-btn:hover {
+  background: #d97706;
+}
+
+.delete-btn {
+  background: #dc2626;
+}
+
+.delete-btn:hover {
+  background: #b91c1c;
+}
+
+.empty {
+  text-align: center;
+  color: #64748b;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px dashed #cbd5e1;
+}
+
+.right-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.right-panel::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.right-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@media (max-width: 992px) {
+  .container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .left-panel,
+  .right-panel {
+    width: 100%;
+  }
+
+  .left-panel {
+    min-width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+    position: static;
+  }
+
+  .right-panel {
+    max-height: 500px;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 12px;
+  }
+
+  .container {
+    border-radius: 16px;
+  }
+
+  .left-panel,
+  .right-panel {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  input,
+  button {
+    font-size: 15px;
+  }
+
+  .btn-row {
+    flex-direction: column;
+  }
+
+  .btn-row button {
+    width: 100%;
+  }
+
+  .user-name {
+    font-size: 18px;
+  }
+}
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Add User</h1>
+<div class="container">
 
-    <div class="form-box">
-      <input type="text" id="name" placeholder="Enter name" />
-      <input type="text" id="role" placeholder="Enter role" />
-      <button onclick="saveUser()">Save User</button>
+    <!-- LEFT SIDE (FORM FIXED) -->
+    <div class="left">
+      <h1 id="formTitle">Add User</h1>
+
+      <div class="form-box">
+        <input type="text" id="name" placeholder="Enter name" />
+        <input type="text" id="role" placeholder="Enter role" />
+
+        <div class="btn-row">
+          <button id="saveBtn" onclick="saveOrUpdateUser()">Save User</button>
+          <button id="cancelBtn" class="cancel-btn" onclick="cancelEdit()" style="display: none;">
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
 
-    <h2>All Users</h2>
-    <div id="users"></div>
+    <!-- RIGHT SIDE (USERS LIST) -->
+    <div class="right">
+      <h2>All Users</h2>
+      <div id="users"></div>
+    </div>
+
   </div>
 
   <script>
-    async function saveUser() {
+    let editUserId = null;
+
+    async function saveOrUpdateUser() {
       const name = document.getElementById("name").value.trim();
       const role = document.getElementById("role").value.trim();
 
@@ -176,43 +316,130 @@
         return;
       }
 
-      const res = await fetch("http://localhost:3000/add-user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ name, role })
-      });
+      try {
+        let res;
 
-      const data = await res.json();
-      console.log(data);
+        if (editUserId) {
+          res = await fetch(`http://localhost:3000/update-user/${editUserId}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name, role })
+          });
+        } else {
+          res = await fetch("http://localhost:3000/add-user", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name, role })
+          });
+        }
 
-      document.getElementById("name").value = "";
-      document.getElementById("role").value = "";
+        const data = await res.json();
+        console.log(data);
 
-      getUsers();
+        if (!res.ok) {
+          alert(data.message || "Something went wrong");
+          return;
+        }
+
+        resetForm();
+        getUsers();
+      } catch (error) {
+        console.log(error);
+        alert("Server error");
+      }
     }
 
     async function getUsers() {
-      const res = await fetch("http://localhost:3000/users");
-      const data = await res.json();
+      try {
+        const res = await fetch("http://localhost:3000/users");
+        const data = await res.json();
 
-      const usersDiv = document.getElementById("users");
-      usersDiv.innerHTML = "";
+        const usersDiv = document.getElementById("users");
+        usersDiv.innerHTML = "";
 
-      if (data.length === 0) {
-        usersDiv.innerHTML = `<div class="empty">No users found</div>`;
-        return;
+        if (data.length === 0) {
+          usersDiv.innerHTML = `<div class="empty">No users found</div>`;
+          return;
+        }
+
+        data.forEach((user) => {
+          usersDiv.innerHTML += `
+            <div class="user-card">
+              <div class="user-name">${user.name}</div>
+              <div class="user-role">${user.role}</div>
+
+              <div class="action-buttons">
+                <button class="small-btn edit-btn" onclick="editUser('${user._id}', '${user.name}', '${user.role}')">
+                  Edit
+                </button>
+                <button class="small-btn delete-btn" onclick="deleteUser('${user._id}')">
+                  Delete
+                </button>
+              </div>
+            </div>
+          `;
+        });
+      } catch (error) {
+        console.log(error);
+        alert("Error fetching users");
       }
+    }
 
-      data.forEach((user) => {
-        usersDiv.innerHTML += `
-          <div class="user-card">
-            <div class="user-name">${user.name}</div>
-            <div class="user-role">${user.role}</div>
-          </div>
-        `;
-      });
+    function editUser(id, name, role) {
+      editUserId = id;
+
+      document.getElementById("name").value = name;
+      document.getElementById("role").value = role;
+
+      document.getElementById("formTitle").innerText = "Update User";
+      document.getElementById("saveBtn").innerText = "Update User";
+      document.getElementById("cancelBtn").style.display = "inline-block";
+    }
+
+    async function deleteUser(id) {
+  const confirmDelete = confirm("Are you sure you want to delete this user?");
+  if (!confirmDelete) return;
+
+  try {
+    const res = await fetch(`http://localhost:3000/delete-user/${id}`, {
+      method: "DELETE",
+    });
+
+    const data = await res.json();
+    console.log("Delete response:", data);
+
+    if (!res.ok) {
+      alert(data.message || "Delete failed");
+      return;
+    }
+
+    if (editUserId === id) {
+      resetForm();
+    }
+
+    alert("User deleted successfully");
+    getUsers();
+  } catch (error) {
+    console.log("Delete error:", error);
+    alert("Error deleting user");
+  }
+}
+
+function cancelEdit() {
+  resetForm();
+}
+
+    function resetForm() {
+      editUserId = null;
+      document.getElementById("name").value = "";
+      document.getElementById("role").value = "";
+      document.getElementById("formTitle").innerText = "Add User";
+      document.getElementById("saveBtn").innerText = "Save User";
+      document.getElementById("cancelBtn").style.display = "none";
     }
 
     getUsers();
