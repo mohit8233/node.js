@@ -1,0 +1,21 @@
+name:{
+    type,
+    required
+}
+
+age:{
+    type,
+    required
+}
+
+membership:{
+     type,
+    required
+}
+
+fees:{
+     type,
+    required
+}
+
+ { timestamps: true }
