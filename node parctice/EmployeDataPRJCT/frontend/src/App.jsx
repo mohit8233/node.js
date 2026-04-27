@@ -1,41 +1,28 @@
-import { useState } from "react";
-import { EmployeeForm } from "./components/EmployeeForm";
-import { EmployeeList } from "./components/EmployeeList";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Header } from "./components/Header";
+import { Home } from "./pages/Home";
+import Login from "./pages/Login";
+import { SignUp } from "./pages/SignUp";
+import EmployeePage from "./pages/EmployeePage";
+import { Dashboard } from "./pages/Dashboard";
+import { Profile } from "./pages/Profile";
+
+
 
 function App() {
-  const [refresh, setRefresh] = useState(false);
-  const [editEmployee, setEditEmployee] = useState(null);
-
-  const refreshData = () => {
-    setRefresh(!refresh);
-  };
-
   return (
-    <div className="min-h-screen bg-gray-100 p-5">
-      
-      {/* flex container */}
-      <div className="flex flex-col md:flex-row gap-6">
+   <>
+      <Header/>
 
-        {/* LEFT: Form */}
-        <div className="w-full md:w-1/3">
-          <EmployeeForm
-            refreshData={refreshData}
-            editEmployee={editEmployee}
-            setEditEmployee={setEditEmployee}
-          />
-        </div>
-
-        {/* RIGHT: List */}
-        <div className="w-full md:w-2/3">
-          <EmployeeList
-            refresh={refresh}
-            setEditEmployee={setEditEmployee}
-            refreshData={refreshData}
-          />
-        </div>
-
-      </div>
-    </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/employee" element={<EmployeePage />} />
+        <Route path="/dashboard" element={<Dashboard/>}/>
+        <Route path="/profile"  element={<Profile/>}/>
+      </Routes>
+    </>
   );
 }
 

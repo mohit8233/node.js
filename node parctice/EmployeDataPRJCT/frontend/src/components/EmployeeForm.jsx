@@ -1,9 +1,10 @@
 import { useEffect } from "react"
 import { useState } from "react"
-import { createEmployee, updateEmployee } from "../api/api"
+import { createEmployee, updateEmployee } from "../api/api.js"
+import { useNavigate } from "react-router-dom"
 
 export const EmployeeForm = ({ refreshData, editEmployee, setEditEmployee }) => {
-
+   const navigate = useNavigate()
   const [obj, setObj] = useState({
     name: "",
     email: "",
@@ -41,6 +42,13 @@ export const EmployeeForm = ({ refreshData, editEmployee, setEditEmployee }) => 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+
+    const token = localStorage.getItem("token");
+        if(!token){
+            alert("Login First");
+            navigate("/login")
+        }
+
     if (editEmployee) {
       updateEmployee(editEmployee._id, obj)
         .then((updateApi) => {
@@ -49,7 +57,8 @@ export const EmployeeForm = ({ refreshData, editEmployee, setEditEmployee }) => 
           } else {
             alert(updateApi.message)
           }
-
+           
+          
           setObj({
             name: "",
             email: "",

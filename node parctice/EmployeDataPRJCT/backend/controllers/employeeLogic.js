@@ -59,7 +59,7 @@ export const bulkUploadEmployee = async (req, res) => {
     }
 }
 
-
+// get 
 export const getAllEmployee = async (req, res) => {
     try {
         let { search, sortBy, order, page, limit } = req.query;
@@ -115,7 +115,7 @@ export const getAllEmployee = async (req, res) => {
         });
     }
 }
-
+ // update 
 export const updateEmployee = async (req,res)=>{
     try {
         const { id} = req.params;
@@ -200,14 +200,12 @@ export const deleteEmployee = async (req,res)=>{
       });
     }
 
-    const updateEmployee = await Employee.findByIdAndDelete(id,res.body,{
-        new: true
-    })
+    const deleteEmployee = await Employee.findByIdAndDelete(id)
 
     return res.json({
         status:true,
         message:"Employee Deleted",
-        data: updateEmployee
+        data: deleteEmployee
     })
     } catch (error) {
          res.json({
