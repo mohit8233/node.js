@@ -1,17 +1,25 @@
 import axios from "axios";
 
-const BASE_URL = "https://employeedata-2.onrender.com/api/employees";
+const BASE_URL = "https://employeedata-lvqe.onrender.com/api/employees";
 
 
-const AUTH_URL = "https://employeedata-2.onrender.com/api/authRoutes";
+const AUTH_URL = "https://employeedata-lvqe.onrender.com/api/authRoutes";
 
 
 // ================= EMPLOYEE =================
 
 // GET
 export const getEmployee = async (params = {}) => {
+  const token = localStorage.getItem("token");
+
   const query = new URLSearchParams(params).toString();
-  const res = await fetch(`${BASE_URL}/getEmployee?${query}`);
+
+  const res = await fetch(`${BASE_URL}/getEmployee?${query}`, {
+    headers: {
+      token: token,
+    },
+  });
+
   return res.json();
 };
 
@@ -21,8 +29,9 @@ export const createEmployee = (data) => {
 
   return axios.post(`${BASE_URL}/create`, data, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      token: token,
     },
+
   });
 };
 
@@ -32,8 +41,9 @@ export const updateEmployee = (id, data) => {
 
   return axios.patch(`${BASE_URL}/updatePartial/${id}`, data, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      token: token,
     },
+
   });
 };
 
@@ -43,8 +53,9 @@ export const deleteEmployee = (id) => {
 
   return axios.delete(`${BASE_URL}/deleteEmployee/${id}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      token: token,
     },
+
   });
 };
 

@@ -1,0 +1,3 @@
+[submodule "project2"]
+	path = project2
+	url = https://github.com/mohit8233/node-project-2

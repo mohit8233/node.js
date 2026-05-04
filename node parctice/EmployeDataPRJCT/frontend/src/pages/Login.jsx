@@ -37,7 +37,7 @@ const Login = () => {
           password:""
         })
 
-        navigate("/dashboard")
+        navigate("/")
       }else{
         alert(loginApi.message)
       }

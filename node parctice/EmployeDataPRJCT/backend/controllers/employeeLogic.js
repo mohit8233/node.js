@@ -119,7 +119,7 @@ export const getAllEmployee = async (req, res) => {
 export const updateEmployee = async (req,res)=>{
     try {
         const { id} = req.params;
-        const{name,email,age,department,salary} = res.body;
+        const{name,email,age,department,salary} = req.body;
 
 
            if (!name || !email || !age || !department || !salary) {
